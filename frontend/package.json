@@ -2,6 +2,6 @@
   "name": "streamonic-frontend",
   "version": "1.0.0",
   "scripts": {
-    "build": "mkdir -p dist && cp -r public/* dist/ && mv dist/dashboard.html dist/index.html && VITE_API_URL=$(grep VITE_API_URL .env | cut -d '=' -f2) && sed \"s@__API_BASE_URL__@$VITE_API_URL@g\" dist/js/app.js > dist/js/app.js.tmp && mv dist/js/app.js.tmp dist/js/app.js"
+    "build": "mkdir -p dist && cp -r public/* dist/ && cp -r src/js dist/js && cp -r src/css dist/css && mv dist/dashboard.html dist/index.html && VITE_API_URL=$(grep VITE_API_URL .env | cut -d '=' -f2) && sed \"s@__API_BASE_URL__@$VITE_API_URL@g\" dist/js/app.js > dist/js/app.js.tmp && mv dist/js/app.js.tmp dist/js/app.js"
   }
 }
