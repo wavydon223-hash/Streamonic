@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY backend ./backend
 COPY frontend ./frontend
+COPY . .
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN cd frontend && npm install && npm run build
