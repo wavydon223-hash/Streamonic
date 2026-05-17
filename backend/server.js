@@ -2,8 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const rateLimit = require("express-rate-limit");
 const path = require("path");
+const fs = require('fs');
 const config = require("./config");
 const app = express();
+
+// Debug: log expected frontend index path and existence
+const expectedIndexPath = path.join(__dirname, '..', 'frontend', 'dist', 'index.html');
+console.log('EXPECTED INDEX PATH:', expectedIndexPath);
+console.log('EXISTS:', fs.existsSync(expectedIndexPath));
 
 // Rate limiting
 const limiter = rateLimit({
