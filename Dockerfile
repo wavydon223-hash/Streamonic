@@ -7,8 +7,7 @@ COPY frontend ./frontend
 COPY . .
 COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
 
-RUN cd frontend && npm install && npm run build && \
-    mkdir -p /app/frontend/dist && cp -r dist/* /app/frontend/dist/
+RUN cd frontend && npm install && npm run build
 RUN cd backend && npm install
 
 CMD ["sh", "deploy/start.sh"]
