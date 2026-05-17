@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peak Matrix</title>
+    <link rel="stylesheet" href="src/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <div class="app">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div>
+                <div class="brand">
+                    <div class="logo">PM</div>
+                    <div class="brand-text">
+                        <h1>Peak Matrix</h1>
+                        <div class="muted">Music release manager</div>
+                    </div>
+                </div>
+                <nav class="nav" id="mainNav">
+                    <button class="nav-item active" data-view="dashboard">Dashboard</button>
+                    <button class="nav-item" data-view="tracks">Tracks</button>
+                    <button class="nav-item" data-view="analytics">Analytics</button>
+                    <button class="nav-item" data-view="campaigns">Campaigns</button>
+                    <button class="nav-item" data-view="marketing">Marketing</button>
+                </nav>
+            </div>
+            <div class="sidebar-footer">
+                <button class="ghost" id="themeToggle">Toggle Theme</button>
+                <div class="muted">v1.0 • Peak Matrix</div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main" id="mainContent">
+            <header class="topbar">
+                <div class="search">
+                    <label for="globalSearch" class="sr-only">Search tracks</label>
+                    <input id="globalSearch" type="text" placeholder="Search tracks, artists, campaigns" aria-label="Search tracks" />
+                </div>
+                <div class="topbar-right">
+                    <span class="visitor-counter" id="visitorCounter">1,248 Visitors Today</span>
+                </div>
+            </header>
+
+            <!-- View: Dashboard -->
+            <section id="viewDashboard" class="view active">
+                <div class="card-grid">
+                    <div class="card stat-card">
+                        <div class="card-header">
+                            <span class="card-title">Total Plays</span>
+                            <span class="card-pill">Last 30 days</span>
+                        </div>
+                        <div class="card-metric" id="statPlays">0</div>
+                        <div class="card-footer">
+                            <span>Across all tracks</span>
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="card-header">
+                            <span class="card-title">Saves / Favorites</span>
+                            <span class="card-pill">Engagement</span>
+                        </div>
+                        <div class="card-metric" id="statSaves">0</div>
+                        <div class="card-footer">
+                            <span>Listener intent</span>
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="card-header">
+                            <span class="card-title">Active Campaigns</span>
+                            <span class="card-pill">Running</span>
+                        </div>
+                        <div class="card-metric" id="statCampaigns">0</div>
+                        <div class="card-footer">
+                            <span>Multi-channel</span>
+                        </div>
+                    </div>
+                    <div class="card stat-card">
+                        <div class="card-header">
+                            <span class="card-title">Total Tracks</span>
+                            <span class="card-pill">Catalog</span>
+                        </div>
+                        <div class="card-metric" id="statTracks">0</div>
+                        <div class="card-footer">
+                            <span>Drafts + Released</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel" style="margin-top:18px">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Recent Activity</h3>
+                            <div class="muted">Latest track uploads and edits</div>
+                        </div>
+                    </div>
+                    <div id="activityList" class="activity-list"></div>
+                </div>
+            </section>
+
+            <!-- View: Tracks -->
+            <section id="viewTracks" class="view" style="display:none">
+                <div class="panel panel-form">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Add New Track</h3>
+                            <div class="muted">Upload, manage, and prepare releases for all platforms</div>
+                        </div>
+                    </div>
+                    <form class="track-form" id="trackForm" novalidate>
+                        <div class="form-row">
+                            <label for="trackTitle">Track Title</label>
+                            <input id="trackTitle" type="text" placeholder="e.g. Midnight in Dubai" />
+                        </div>
+                        <div class="form-row">
+                            <label for="artistName">Artist Name</label>
+                            <input id="artistName" type="text" placeholder="e.g. Snupe" />
+                        </div>
+                        <div class="form-row">
+                            <label>Audio File</label>
+                            <div id="dropZone" class="drop-zone">
+                                <div class="drop-zone-text">Drop audio here or click to browse</div>
+                                <div class="drop-zone-hint">MP3, WAV, M4A — up to 50 MB</div>
+                                <input id="audioFile" class="file-input" type="file" accept="audio/*" />
+                            </div>
+                            <div id="audioInfo" class="audio-info"></div>
+                            <div id="audioPreview" class="audio-preview"></div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save as Draft</button>
+                            <button type="button" id="createTest" class="btn btn-ghost">Create Test</button>
+                        </div>
+                        <div class="form-error" id="formError" role="alert" aria-live="polite"></div>
+                    </form>
+                </div>
+
+                <div class="panel" style="margin-top:18px">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Your Tracks</h3>
+                            <div class="muted">Drafts and saved uploads</div>
+                        </div>
+                    </div>
+                    <div id="trackList" class="track-list"></div>
+                </div>
+            </section>
+
+            <!-- View: Analytics -->
+            <section id="viewAnalytics" class="view" style="display:none">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Performance Analytics</h3>
+                    </div>
+                    <div class="muted" style="margin-bottom:16px">Track your growth across platforms.</div>
+                    <div id="analyticsContent">
+                        <div class="empty-state">Loading analytics...</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- View: Campaigns -->
+            <section id="viewCampaigns" class="view" style="display:none">
+                <div class="panel panel-form">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Create Campaign</h3>
+                            <div class="muted">Run and track your promo pushes</div>
+                        </div>
+                    </div>
+                    <form id="campaignForm" class="campaign-form" novalidate>
+                        <div class="form-row">
+                            <label for="campaignName">Campaign Name</label>
+                            <input id="campaignName" type="text" placeholder="e.g. Spotify Playlist Push" />
+                        </div>
+                        <div class="form-row">
+                            <label for="campaignChannel">Channel</label>
+                            <select id="campaignChannel" class="select-field">
+                                <option value="Spotify">Spotify</option>
+                                <option value="Apple Music">Apple Music</option>
+                                <option value="YouTube">YouTube</option>
+                                <option value="TikTok">TikTok</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <label for="campaignBudget">Budget (optional)</label>
+                            <input id="campaignBudget" type="number" min="0" placeholder="0" />
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Create Campaign</button>
+                        </div>
+                        <div class="form-error" id="campaignFormError" role="alert" aria-live="polite"></div>
+                    </form>
+                </div>
+
+                <div class="panel" style="margin-top:18px">
+                    <div class="panel-header">
+                        <div>
+                            <h3>Campaign List</h3>
+                            <div class="muted">All campaigns stored locally</div>
+                        </div>
+                    </div>
+                    <div id="campaignList" class="list-container"></div>
+                </div>
+            </section>
+
+            <!-- View: Marketing -->
+            <section id="viewMarketing" class="view" style="display:none">
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Marketing Tools</h3>
+                    </div>
+                    <div class="muted" style="margin-bottom:16px">Content ideas, captions, scripts, and automation.</div>
+                    <div id="marketingContent"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Core Utilities (loaded first) -->
+    <script src="src/js/core/utils.js"></script>
+    <script src="src/js/core/storage.js"></script>
+    <script src="src/js/core/router.js"></script>
+
+    <!-- UI Components -->
+    <script src="src/js/ui/components.js"></script>
+    <script src="src/js/ui/sidebar.js"></script>
+
+    <!-- View Modules -->
+    <script src="src/js/views/dashboard.js"></script>
+    <script src="src/js/views/tracks.js"></script>
+    <script src="src/js/views/analytics.js"></script>
+    <script src="src/js/views/campaigns.js"></script>
+    <script src="src/js/views/marketing.js"></script>
+
+    <!-- Main App Entry -->
+    <script src="src/js/app.js"></script>
+
+</body>
+</html>
