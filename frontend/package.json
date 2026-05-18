@@ -2,6 +2,6 @@
   "name": "streamonic-frontend",
   "version": "1.0.0",
   "scripts": {
-    "build": "mkdir -p dist && cp -r public/* dist/ 2>/dev/null || true && [ -d src/js ] && cp -r src/js dist/js 2>/dev/null || true && [ -d src/css ] && cp -r src/css dist/css 2>/dev/null || true && if [ -f dist/dashboard.html ]; then mv dist/dashboard.html dist/index.html; elif [ -f dashboard.html ]; then cp dashboard.html dist/index.html; fi && VITE_API_URL=$(grep VITE_API_URL .env 2>/dev/null | cut -d '=' -f2) && if [ -f dist/js/app.js ]; then sed \"s@__API_BASE_URL__@$VITE_API_URL@g\" dist/js/app.js > dist/js/app.js.tmp && mv dist/js/app.js.tmp dist/js/app.js; fi"
+    "build": "mkdir -p dist && cp -r public/* dist/ 2>/dev/null || true && if [ -d src/js ]; then cp -r src/js dist/js 2>/dev/null || true; fi && if [ -d src/css ]; then cp -r src/css dist/css 2>/dev/null || true; fi && if [ -f dist/dashboard.html ]; then mv dist/dashboard.html dist/index.html; elif [ -f dashboard.html ]; then cp dashboard.html dist/index.html; fi && VITE_API_URL=$(grep VITE_API_URL .env 2>/dev/null | cut -d '=' -f2) && if [ -f dist/js/app.js ]; then sed \"s@__API_BASE_URL__@$VITE_API_URL@g\" dist/js/app.js > dist/js/app.js.tmp && mv dist/js/app.js.tmp dist/js/app.js; fi"
   }
 }
